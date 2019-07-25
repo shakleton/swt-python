@@ -3,6 +3,7 @@
 #include "io/_ccv_io_libjpeg.inc"
 #include <sys/time.h>
 #include <ctype.h>
+#include <stdio.h>
 #define SUCCESS 1
 #define FAILURE 0
 
@@ -15,10 +16,12 @@ int* swt(char *bytes, int array_length, int width, int height){
 	FILE *stream;
 	stream = fmemopen(bytes, array_length, "r");
 	if(stream != NULL){
-        int type = CCV_IO_JPEG_FILE | CCV_IO_GRAY;
+        int type = CCV_IO_ANY_FILE | CCV_IO_GRAY;
         int ctype = (type & 0xF00) ? CCV_8U | ((type & 0xF00) >> 8) : 0;
-        _ccv_read_jpeg_fd(stream, &image, ctype);
-
+        printf("Reading test!\n");
+        _ccv_read_jpeg_fd(stream, &image, CCV_IO_ANY_FILE);
+        //printf("%s\n", bytes);
+	int x = 0;
         if (image != 0)
         {
             ccv_array_t* words = ccv_swt_detect_words(image, ccv_swt_default_params);
@@ -41,8 +44,15 @@ int* swt(char *bytes, int array_length, int width, int height){
             }
             ccv_matrix_free(image);
         }
+	else
+	{
+		printf("No image\n");
+	}
         ccv_drain_cache();
 	}
+	else{
+		printf("No stream\n");
+}
 
 
     if(status != SUCCESS){

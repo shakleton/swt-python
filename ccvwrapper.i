@@ -1,6 +1,6 @@
 %module ccvwrapper
 %begin %{
-#define SWIG_PYTHON_STRICT_BYTE_CHAR
+
 %}
 %{
 #include "ccvwrapper.h"
@@ -14,6 +14,12 @@
 		PyList_SetItem($result, i, o);
 	}
 	free($1);
+}
+
+%typemap(in) (char *bytes, int array_length) {
+    Py_ssize_t len;
+    PyBytes_AsStringAndSize($input, &$1, &len);
+    $2 = (int)len;
 }
 
 %include "ccvwrapper.h"
