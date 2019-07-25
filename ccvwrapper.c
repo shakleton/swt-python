@@ -1,6 +1,4 @@
-#include "ccv.h"
-#include <jpeglib.h>
-#include "io/_ccv_io_libjpeg.inc"
+#include <ccv.h>
 #include <sys/time.h>
 #include <ctype.h>
 #include <stdio.h>
@@ -14,12 +12,13 @@ int* swt(char *bytes, int array_length, int width, int height){
 	ccv_dense_matrix_t* image = 0;
 
 	FILE *stream;
-	stream = fmemopen(bytes, array_length, "r");
+//	stream = fmemopen(bytes, array_length, "r");
+stream = fopen("/home/mzablocki/swt-python/ccv/lib/test_input.jpg", "r");
 	if(stream != NULL){
-        int type = CCV_IO_ANY_FILE | CCV_IO_GRAY;
+        int type = CCV_IO_GRAY | CCV_IO_ANY_FILE;
         int ctype = (type & 0xF00) ? CCV_8U | ((type & 0xF00) >> 8) : 0;
-        printf("Reading test!\n");
-        _ccv_read_jpeg_fd(stream, &image, CCV_IO_ANY_FILE);
+        printf("Reading test2!\n");
+        ccv_read("/home/mzablocki/swt-python/ccv/lib/test_input.jpg", &image, CCV_IO_GRAY | CCV_IO_ANY_FILE);
         //printf("%s\n", bytes);
 	int x = 0;
         if (image != 0)
