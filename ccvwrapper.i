@@ -1,5 +1,7 @@
 %module ccvwrapper
-
+%begin %{
+#define SWIG_PYTHON_STRICT_BYTE_CHAR
+%}
 %{
 #include "ccvwrapper.h"
 %}

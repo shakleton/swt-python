@@ -1,6 +1,6 @@
 #include "ccv.h"
 #include <jpeglib.h>
-#include "io/_ccv_io_libjpeg.c"
+#include "io/_ccv_io_libjpeg.inc"
 #include <sys/time.h>
 #include <ctype.h>
 #define SUCCESS 1
